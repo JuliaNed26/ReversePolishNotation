@@ -113,7 +113,7 @@ namespace ReversePolishNotation
             {
                 try
                 {
-                    numbers.Add(Convert.ToDouble(number));
+                    numbers.Add(Convert.ToDouble(symbol));
                 }
                 catch (Exception e)
                 {
