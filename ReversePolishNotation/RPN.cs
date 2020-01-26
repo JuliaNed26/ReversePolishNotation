@@ -115,7 +115,7 @@ namespace ReversePolishNotation
             return numbers[0];
         }
 
-        public double CalculateResultOfAnOperation(char operation, double firstNumber, double secondNumber)
+        private double CalculateResultOfAnOperation(char operation, double firstNumber, double secondNumber)
         {
             double result = 0;
 
