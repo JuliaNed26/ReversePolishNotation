@@ -45,12 +45,12 @@ namespace ReversePolishNotation
                         number = "";
                     }
 
-                    else if ((symbol != '('&&i==0) || (i != 0 && expression[i - 1] != ')' && symbol != '(')) //operation can't stay before number
+                    else if ((symbol != '(' && i==0) || (i != 0 && expression[i - 1] != ')' && symbol != '(')) //operation can't stay before number
                     {
                         throw new Exception("Wrong expression");
                     }
 
-                    if (operationsStack.Count == 0 || _allOperations[operationsStack.Peek()] < _allOperations[symbol] || symbol == '(') //add operation to the queue of operations
+                    if (operationsStack.Count == 0 || _allOperations[operationsStack.Peek()] < _allOperations[symbol]) //add operation to the queue of operations
                     {
                         operationsStack.Push(symbol);
                     }
@@ -63,24 +63,12 @@ namespace ReversePolishNotation
 
                     else//push only operations in brackets
                     {
-                        int operationsForDeleting = 0;
-
-                        foreach (var operation in operationsStack)
+                        while (operationsStack.Peek() != '(')
                         {
-                            operationsForDeleting += 1;
-
-                            if (operation == '(')
-                            {
-                                break;
-                            }
-
-                            polishExpression.Enqueue(operation.ToString());
+                            polishExpression.Enqueue(operationsStack.Pop().ToString());
                         }
 
-                        for (int k = 0; k < operationsForDeleting; k++) //push operations in reverse order
-                        {
-                            operationsStack.Pop();
-                        }
+                        operationsStack.Pop();
                     }
                 }
 
@@ -93,9 +81,9 @@ namespace ReversePolishNotation
                 {
                     polishExpression.Enqueue(number);
 
-                    foreach (var operation in operationsStack)
+                    while (operationsStack.Count!=0)
                     {
-                        polishExpression.Enqueue(operation.ToString());
+                        polishExpression.Enqueue(operationsStack.Pop().ToString());
                     }
                 }
             }
@@ -106,7 +94,6 @@ namespace ReversePolishNotation
 
         public double Calculate(Queue<string> expression)
         {
-            string number = "";
             List<double> numbers = new List<double>();
 
             foreach (string symbol in expression)
